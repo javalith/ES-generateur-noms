@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Générateur de noms</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 50px; }
+    button { padding: 10px 20px; font-size: 18px; }
+    #result { margin-top: 20px; font-size: 24px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Générateur de noms</h1>
+  <button onclick="genererNom()">Générer un nom</button>
+  <div id="result"></div>
+
+  <script>
+    async function genererNom() {
+      const response = await fetch("TON_URL_DE_L_API"); // colle ici l’URL du déploiement
+      const data = await response.json();
+      document.getElementById("result").innerText = ${data.prenom} ${data.nom};
+    }
+  </script>
+</body>
+</html>
