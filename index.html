@@ -1,44 +1,33 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Générateur de noms</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-  </style>
+  <title>Noms Garyanith</title>
 </head>
-<body>
-  <h1>🎲 Générateur de noms</h1>
-  <button id="btn-generer">Générer un nom</button>
-  <div id="result">Clique sur le bouton !</div>
+<body style="text-align:center; font-family:Arial; padding:40px;">
+  <h1>Générateur de noms Garyanith</h1>
+  <label for="genre">Genre :</label>
+  <select id="genre">
+    <option value="neutre">Neutre</option>
+    <option value="masculin">Masculin</option>
+    <option value="féminin">Féminin</option>
+  </select>
+  <br><br>
+  <button onclick="genererNom()">Générer</button>
+  <div id="result" style="margin-top:20px; font-size:24px; font-weight:bold;"></div>
 
   <script>
     async function genererNom() {
+      const genre = document.getElementById("genre").value;
+      const url = `https://script.google.com/macros/s/AKfycbxJe0d06zTXtwzHXM7P2lzoAWyZH8Eqq_tQmpscw3eZ5TjdRAFlUnqoYWpN3YhpR5TN/exec?genre=${genre}`;
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxJe0d06zTXtwzHXM7P2lzoAWyZH8Eqq_tQmpscw3eZ5TjdRAFlUnqoYWpN3YhpR5TN/exec");
-        const data = await response.json();
-        document.getElementById("result").innerText = ${data.prenom} ${data.nom};
-      } catch (error) {
-        document.getElementById("result").innerText = "Erreur de chargement 😢";
-        console.error("Erreur lors de la récupération :", error);
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById("result").innerText = data.nom;
+      } catch (e) {
+        document.getElementById("result").innerText = "Erreur lors du chargement";
       }
     }
-
-    // Lier la fonction au clic sur le bouton
-    document.getElementById("btn-generer").addEventListener("click", genererNom);
   </script>
 </body>
 </html>
