@@ -1,31 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Noms Garyanith</title>
+  <title>Générateur de noms fantasy</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; background-color: #f0f8ff; }
+    h1 { font-size: 32px; margin-bottom: 20px; }
+    button {
+      margin: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #357ab8;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
-<body style="text-align:center; font-family:Arial; padding:40px;">
-  <h1>Générateur de noms Garyanith</h1>
-  <label for="genre">Genre :</label>
-  <select id="genre">
-    <option value="neutre">Neutre</option>
-    <option value="masculin">Masculin</option>
-    <option value="féminin">Féminin</option>
-  </select>
-  <br><br>
-  <button onclick="genererNom()">Générer</button>
-  <div id="result" style="margin-top:20px; font-size:24px; font-weight:bold;"></div>
+<body>
+  <h1>Générateur de noms fantasy</h1>
+
+  <button onclick="genererNom('Garyanith', 'neutre')">Nom neutre (Garyanith)</button>
+  <button onclick="genererNom('Garyanith', 'masculin')">Nom masculin (Garyanith)</button>
+  <button onclick="genererNom('Garyanith', 'féminin')">Nom féminin (Garyanith)</button>
+
+  <div id="result"></div>
 
   <script>
-    async function genererNom() {
-      const genre = document.getElementById("genre").value;
-      const url = `https://script.google.com/macros/s/AKfycbxJe0d06zTXtwzHXM7P2lzoAWyZH8Eqq_tQmpscw3eZ5TjdRAFlUnqoYWpN3YhpR5TN/exec?genre=${genre}`;
+    async function genererNom(region, genre) {
+      const apiUrl = "https://script.google.com/macros/s/AKfycbw8YcVB4GoGSiOBX295R-Phb8-30-Ry2s5gqfyiv5yrHld0_rG6cJg2gspC-F4AFyMw/exec"; // ← Colle ici ton URL Apps Script
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById("result").innerText = data.nom;
-      } catch (e) {
-        document.getElementById("result").innerText = "Erreur lors du chargement";
+        const response = await fetch(`${apiUrl}?region=${region}&genre=${genre}`);
+        const data = await response.json();
+        document.getElementById("result").innerText = data.nom || "Aucun nom trouvé.";
+      } catch (error) {
+        document.getElementById("result").innerText = "Erreur de connexion à la base de données.";
       }
     }
   </script>
