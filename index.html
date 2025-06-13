@@ -4,16 +4,27 @@
   <meta charset="UTF-8">
   <title>Générateur de noms fantasy</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; background-color: #f0f8ff; }
-    h1 { font-size: 32px; margin-bottom: 20px; }
-    button {
-      margin: 10px;
-      padding: 12px 20px;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #eef2f7;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    select, button {
       font-size: 16px;
-      border: none;
+      padding: 10px 14px;
+      margin: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
       background-color: #4a90e2;
       color: white;
-      border-radius: 8px;
+      border: none;
       cursor: pointer;
     }
     button:hover {
@@ -23,28 +34,54 @@
       margin-top: 30px;
       font-size: 28px;
       font-weight: bold;
-      color: #333;
+      color: #222;
     }
   </style>
 </head>
 <body>
   <h1>Générateur de noms fantasy</h1>
 
-  <button onclick="genererNom('Garyanith', 'neutre')">Nom neutre (Garyanith)</button>
-  <button onclick="genererNom('Garyanith', 'masculin')">Nom masculin (Garyanith)</button>
-  <button onclick="genererNom('Garyanith', 'féminin')">Nom féminin (Garyanith)</button>
+  <div>
+    <select id="region">
+      <option value="">-- Choisir une région --</option>
+      <option value="GARYANITH">Garyanith</option>
+      <option value="BRASEA">Brasea</option>
+      <option value="KYANOS">Kyanos</option>
+      <option value="NORTHUNYRE">Northunyre</option>
+      <option value="HEVENBYRE">Hevenbyre</option>
+    </select>
+
+    <select id="genre">
+      <option value="">-- Choisir un genre --</option>
+      <option value="NOMS NEUTRES">Neutre</option>
+      <option value="NOMS MASCULINS">Masculin</option>
+      <option value="NOMS FEMININS">Féminin</option>
+    </select>
+
+    <button onclick="genererNom()">Générer</button>
+  </div>
 
   <div id="result"></div>
 
   <script>
-    async function genererNom(region, genre) {
-      const apiUrl = "https://script.google.com/macros/s/AKfycbw8YcVB4GoGSiOBX295R-Phb8-30-Ry2s5gqfyiv5yrHld0_rG6cJg2gspC-F4AFyMw/exec"; // ← Colle ici ton URL Apps Script
+    async function genererNom() {
+      const region = document.getElementById('region').value;
+      const genre = document.getElementById('genre').value;
+
+      if (!region || !genre) {
+        document.getElementById('result').innerText = "Veuillez sélectionner une région et un genre.";
+        return;
+      }
+
+      const query = `${region} - ${genre}`;
+      const apiUrl = "https://script.google.com/macros/s/AKfycbxfy8Sp1vhFh3u492hIHsgT88rSlIYTF8H8Cal7R-hyJAKr1pD_UdxIsEwdRsOgDzMM/exec"; // ← à remplacer par ton URL Web Apps
+
       try {
-        const response = await fetch(`${apiUrl}?region=${region}&genre=${genre}`);
+        const response = await fetch(`${apiUrl}?genre=${encodeURIComponent(query)}`);
         const data = await response.json();
-        document.getElementById("result").innerText = data.nom || "Aucun nom trouvé.";
+        document.getElementById('result').innerText = data.nom || "Aucun nom généré.";
       } catch (error) {
-        document.getElementById("result").innerText = "Erreur de connexion à la base de données.";
+        document.getElementById('result').innerText = "Erreur lors de la requête.";
       }
     }
   </script>
