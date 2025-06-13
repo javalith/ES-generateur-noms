@@ -28,7 +28,7 @@
   <script>
     async function genererNom() {
       try {
-        const response = await fetch("https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLi9FPsqjBPKIiH-oJzaRrnKAEVIiKEq2WDasnjXvShnw7zVoTt32mCaP7e1f7fmhI247BzFwBdHg1Ou5a49Ge9pgPMPKFc6dk78gO7Yc1jhzLdtC21YHNJd5tDNY5ob9fbBYIS03Q9xE9p8XWBn2xspGEzUk3R-vQhDOsOPkFSGvR6JfFLlXTr7-apYQ6DXhQVmGzx9RdSyE5iHXNlWjfKloIs1yFkmk37HblDR_7GHLHHryXihKFVXXjXWOkkLAULm6OpHIQ47An10J8hgE4GpuyaUWw&lib=MiJl1-xCTpEiov-NNjBsNaHsSyhLjz4tH");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxJe0d06zTXtwzHXM7P2lzoAWyZH8Eqq_tQmpscw3eZ5TjdRAFlUnqoYWpN3YhpR5TN/exec");
         const data = await response.json();
         document.getElementById("result").innerText = ${data.prenom} ${data.nom};
       } catch (error) {
