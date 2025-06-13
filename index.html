@@ -15,7 +15,7 @@
 
   <script>
     async function genererNom() {
-      const response = await fetch("TON_URL_DE_L_API"); // colle ici l’URL du déploiement
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxjpBocA566HRxvl1o_BbMxdeiOFGyVo6V10YQdhRGHFVORlTOn4KQlvGCQ-KEX4Lkj/exec"); // colle ici l’URL du déploiement
       const data = await response.json();
       document.getElementById("result").innerText = ${data.prenom} ${data.nom};
     }
